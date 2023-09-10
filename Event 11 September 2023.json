@@ -1,0 +1,26 @@
+from flask import Flask, jsonify
+from datetime import datetime
+
+app = Flask(__name__)
+
+# Daftar event
+events = [
+    {
+        'nama': 'Meeting Dinas Kesehatan Lotim',
+        'pax': 34,
+        'waktu': datetime(2023, 11, 11, 11, 20)
+    },
+]
+
+# Endpoint untuk mendapatkan daftar event
+@app.route('/events', methods=['GET'])
+def get_events():
+    current_time = datetime.now()
+
+    # Filter event berdasarkan waktu
+    filtered_events = [event for event in events if event['waktu'] > current_time]
+
+    return jsonify(filtered_events)
+
+if __name__ == '__main__':
+    app.run()
